@@ -16,7 +16,11 @@ const StockTable = () => {
         const intradayData = response.data['Time Series (5min)'];
         const stockDataArray = Object.entries(intradayData).map(([timestamp, data]) => ({
           timestamp,
-          price: parseFloat(data['1. open']),
+          open: parseFloat(data['1. open']),
+          high: parseFloat(data['2. high']),
+          low: parseFloat(data['3. low']),
+          close: parseFloat(data['4. close']),
+          volume: parseInt(data['5. volume']),
         }));
         setStockData(stockDataArray);
       })
@@ -33,14 +37,22 @@ const StockTable = () => {
           <thead>
             <tr>
               <th className="py-2 px-4 bg-gray-100">Timestamp</th>
-              <th className="py-2 px-4 bg-gray-100">Price</th>
+              <th className="py-2 px-4 bg-gray-100">Open</th>
+              <th className="py-2 px-4 bg-gray-100">High</th>
+              <th className="py-2 px-4 bg-gray-100">Low</th>
+              <th className="py-2 px-4 bg-gray-100">Close</th>
+              <th className="py-2 px-4 bg-gray-100">Volume</th>
             </tr>
           </thead>
           <tbody>
             {stockData.map((dataPoint, index) => (
               <tr key={index}>
                 <td className="py-2 px-4">{dataPoint.timestamp}</td>
-                <td className="py-2 px-4">${dataPoint.price.toFixed(2)}</td>
+                <td className="py-2 px-4">${dataPoint.open.toFixed(2)}</td>
+                <td className="py-2 px-4">${dataPoint.high.toFixed(2)}</td>
+                <td className="py-2 px-4">${dataPoint.low.toFixed(2)}</td>
+                <td className="py-2 px-4">${dataPoint.close.toFixed(2)}</td>
+                <td className="py-2 px-4">{dataPoint.volume}</td>
               </tr>
             ))}
           </tbody>
